@@ -32,8 +32,6 @@ Use getFinals to do the following:
 hint - you should be looking at the stage key inside of the objects
 */
 
-//Below works to get the desired output....but struggling to put it in a function 
-
 // const finalsTeam = fifaData.filter(function(item){
 //     return item.Stage === "Final";
 // });
@@ -58,10 +56,12 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(/* code here */) {
-    /* code here */
+function getYears(data, getFinalsCB) {
+    const years = getFinalsCB(data).map(function(item){
+        return item.Year;
+    });
+    return years;
 }
-
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -72,10 +72,16 @@ Use the higher-order function getWinners to do the following:
 4. Returns the names of all winning countries in an array called `winners` */ 
 //Dont worry about overtime - compare home team goals to away team goals
 
-function getWinners(/* code here */) {
-    /* code here */
+function getWinners(data, getFinalsCB) {
+    const winners = getFinalsCB(data).map(function(item){
+        if(item['Home Team Goals'] > item['Away Team Goals']){
+            return item ['Home Team Name'];
+        }else {
+            return item ['Away Team Name'];
+        }
+    })
+    return winners;
 }
-
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -88,10 +94,12 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
-}
+function getWinnersByYear(data,getYearsCB,getWinnersCB) {
+    const year = getYearsCB (data, getFinals);
+    const country = getWinnersCB (data, getFinals);
 
+    return country.map ((country, index) => `In ${year[index]}, ${country} won the world cup!`)
+}
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -104,7 +112,7 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
+function getAverageGoals(getFinalsCB) {
    /* code here */
 }
 
