@@ -101,6 +101,21 @@ function getWinnersByYear(data,getYearsCB,getWinnersCB) {
     return country.map ((country, index) => `In ${year[index]}, ${country} won the world cup!`)
 }
 
+const FifaFinals = getFinals(fifaData);
+//calculating Total Home Goals
+let TotalHomeGoals = FifaFinals.reduce((acc, item) => {
+    return acc + item['Home Team Goals']
+},0);
+
+let TotalAwayGoals = FifaFinals.reduce((acc, item) => {
+    return acc + item['Away Team Goals']
+},0);
+
+console.log('Testing1',TotalHomeGoals);
+console.log('Testing2',TotalAwayGoals);
+console.log
+console.log('Number of Fifa Finals', FifaFinals.length);
+
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -108,14 +123,36 @@ Use the higher order function getAverageGoals to do the following:
  2. Return the the average number of the total home team goals and away team goals scored per match and round to the second decimal place. 
  
  (Hint: use .reduce and do this in 2 steps) 
+
  
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
 function getAverageGoals(getFinalsCB) {
-   /* code here */
+    //naming the array that holds just the finals data from Fifa
+    const FifaFinals = getFinals(fifaData);
+    
+    //calculating Total Home Goals...this should add up to 42
+    let TotalHomeGoals = FifaFinals.reduce((acc, item) => {
+        return acc + item['Home Team Goals']
+    },0);
+    
+    //calculating Total Away Goals...this should add up to 26
+    let TotalAwayGoals = FifaFinals.reduce((acc, item) => {
+        return acc + item['Away Team Goals']
+    },0);
+    
+    //This is just summing Total Home + Total Away
+    const TotalGoals = TotalHomeGoals + TotalAwayGoals;
+    
+    //calculating the average by dividing Total Goals over number of finals game in our Fifa Data
+    const AvgGoals = TotalGoals / FifaFinals.length
+
+    //Just putting down the appropriate decimals
+    return AvgGoals.toFixed(2)
 }
 
+console.log('Task 6', getAverageGoals(getFinals(fifaData)));
 
 
 
